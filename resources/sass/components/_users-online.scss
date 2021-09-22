@@ -1,0 +1,26 @@
+.users_online{
+    position:fixed;
+    border-radius: 2px;
+    bottom:0px;
+    right:3px;
+    padding: 1rem .5rem;
+    color: #333;
+    background-color: rgb(231, 236, 240);
+    min-width: 15%;
+
+}
+
+.users_online_reduced_height{
+     max-height: 2rem;
+     padding: 0rem .5rem;
+     max-width: 15%; 
+     background: transparent; 
+}
+
+.user_online_toggle{
+    font-size: 1rem;
+    letter-spacing: .5px;
+    &:focus{
+        box-shadow: none;
+    }
+}

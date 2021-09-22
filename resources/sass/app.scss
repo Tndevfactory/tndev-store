@@ -1,0 +1,21 @@
+
+@import "./config";
+@import "./helpers/helpers";
+
+// components
+@import "./components/navbar";
+@import "./components/oval_shape";
+@import "./components/navbar-search";
+@import "./components/footer";
+@import "./components/users-online";
+@import "./components/lang_switcher";
+@import "./components/theme_switcher";
+@import "./components/carousel";
+
+// pages
+@import "./welcome";
+@import "./blog";
+@import "./about";
+
+// login
+@import "./login/login";

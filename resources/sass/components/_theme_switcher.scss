@@ -1,0 +1,18 @@
+#thema-switcher {
+    #defaultDropdown {
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    .fas.fa-cog {
+        font-size: 1.9rem;
+        @media (max-width: 700px) {
+            font-size: 1.1rem;
+        }
+    }
+
+    .dropdown-menu {
+        min-width: 7rem !important;
+    }
+}

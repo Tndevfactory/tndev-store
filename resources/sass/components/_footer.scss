@@ -1,0 +1,75 @@
+#footer {
+    font-family: "Oswald", sans-serif;
+    background: #28333c;
+    color: white;
+
+    .promo-panel-icon {
+        font-size: 3rem;
+        @media (max-width: 700px) {
+            font-size: 2rem;
+        }
+    }
+    .promo-panel-text {
+        font-size: 1rem;
+        margin-top: 3px;
+        font-family: "PT-Sans";
+        @media (max-width: 700px) {
+            font-size: 0.81rem;
+        }
+    }
+
+    .newsletter {
+        font-size: 1rem;
+        @media (max-width: 700px) {
+            font-size: 0.81rem;
+        }
+    }
+    .service-list {
+        font-size: 1rem;
+        @media (max-width: 700px) {
+            font-size: 0.81rem;
+        }
+        .footer-list-header {
+            font-size: 1.6rem;
+            margin-left: 1.13rem;
+            color: #fcb80a !important;
+            &:hover {
+                color: #42a1e0 !important;
+            }
+        }
+        .footer-list-link {
+            color: white !important;
+            &:hover {
+                color: #fcb80a !important;
+            }
+        }
+    }
+    .title-brand {
+        font-size: 1.9rem;
+        letter-spacing: 0.61px;
+        font-weight: 500;
+        font-family: "Roboto Slab";
+        color: #fcb80a;
+        &:hover {
+            color: lighten(#42a1e0, 8) !important;
+        }
+        @media (max-width: 700px) {
+            font-size: 1.1rem;
+        }
+    }
+    .social-media {
+        font-size: 1rem;
+        @media (max-width: 700px) {
+            font-size: 0.81rem;
+        }
+    }
+
+    .signature {
+        background-color: #071b29;
+    }
+    a.signature-text {
+        letter-spacing: 0.6px;
+        font-size: 0.81rem !important;
+        color: #fcb80a;
+    }
+}

@@ -1,0 +1,24 @@
+#lang-switcher {
+    #defaultDropdown {
+        &:focus {
+            box-shadow: none;
+        }
+    }
+    .dropdown-menu {
+        min-width: 7rem !important;
+
+        li {
+            transition: 0.5s;
+            cursor: pointer;
+            // &:hover {
+            //     background-color: saturate(#7e1c5d, 48) !important;
+            // }
+            &:hover a {
+                color: lighten(#7e1c5d, 8) !important;
+            }
+        }
+        li a {
+            color: #1b5e82 !important;
+        }
+    }
+}

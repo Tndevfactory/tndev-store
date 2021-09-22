@@ -1,0 +1,69 @@
+.ff-Oswald {
+    font-family: "Oswald", sans-serif;
+}
+
+.ff-Mukta {
+    font-family: "Mukta", sans-serif;
+}
+
+.ff-Poly {
+    font-family: "Poly", serif;
+}
+
+.ff-PT-Sans {
+    font-family: "PT Sans", sans-serif;
+}
+
+.ff-Questrial {
+    font-family: "Questrial", sans-serif;
+}
+
+.ff-Quicksand {
+    font-family: "Quicksand", sans-serif;
+}
+
+.ff-Roboto {
+    font-family: "Roboto", sans-serif;
+}
+
+.ff-Roboto-Condensed {
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.ff-Roboto-Slab {
+    font-family: "Roboto Slab", serif;
+}
+
+.ff-Noto-Naskh {
+    font-family: "Noto Naskh Arabic", serif;
+}
+.arabic {
+    direction: rtl;
+    font-size: 1.2rem;
+    font-family: "Noto Naskh Arabic", serif;
+    line-height: 1.6;
+    @media (max-width: 700px) {
+        font-size: 1rem;
+    }
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-size: inherit;
+    font-weight: inherit;
+    display: inline;
+    margin: inherit;
+    padding: inherit;
+}
+
+.blink {
+    animation: blinker 2.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}

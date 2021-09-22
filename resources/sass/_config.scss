@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Poly:ital@0;1&family=Questrial&family=Quicksand:wght@300;400;500;600;700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap");
+// :root{
+
+//   --theme-color-light:rgb(73, 75, 77);
+//   --theme-bgcolor-light:rgb(255, 255, 255);
+
+//   --theme-color-dark:rgb(197, 195, 195);
+//   --theme-bgcolor-dark:rgb(80, 80, 82);
+
+//   --theme-color:var(--theme-color-light);
+//   --theme-bgcolor:var(--theme-bgcolor-light);
+// }
+
+//     $theme-color:var(--theme-color);
+//     $theme-bgcolor:var(--theme-bgcolor);
+
+$text-size: 1rem;
+// initialisation
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: $text-size;
+}
+body {
+    background-color: rgb(255, 255, 255);
+    color: #333;
+    overflow-x: hidden;
+    font-family: "PT Sans", sans-serif;
+    //font-family: 'Oswald', sans-serif;
+    line-height: 1.55;
+}

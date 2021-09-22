@@ -1,0 +1,425 @@
+socialite api fb gmail github:
+https://www.youtube.com/watch?v=jIckLu1cKew
+
+composer require paypal/paypal-checkout-sdk 1.0.1
+https://developer.paypal.com/docs/checkout/reference/server-integration/setup-sdk/
+
+multi-role
+
+php artisan make:model Role -m
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateRolesTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('roles');
+    }
+}
+
+
+php artisan make:migration create_role_user_table --create=role_user
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateRoleUserTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->primary(['role_id', 'user_id']);
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('role_user');
+    }
+}
+
+
+class Role extends Model
+{
+    protected $fillable = [
+        'name',
+    ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+}
+
+class User extends Authenticatable
+{
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+}
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class EnsureUserHasRole
+{
+    public function handle(Request $request, Closure $next, string $role)
+    {
+        if ($request->user()->roles()->where('name', '=', $role)->exists()) {
+            return $next($request);
+        }
+
+        abort(403);
+    }
+}
+Register the middleware
+
+Because the middleware class has a parameter, we’ll need to register it in your app/Http/Kernel.php file:
+
+protected $routeMiddleware = [
+    'role' => \App\Http\Middleware\EnsureUserHasRole::class,
+    // Other route middleware...
+];
+
+You can then apply the middleware to a route or a route group:
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // User is authentication and has admin role
+});
+
+
+laravel:8
+ommand 	Description
+$table->primary('id'); 	Adds a primary key.
+$table->primary(['id', 'parent_id']); 	Adds composite keys.
+$table->unique('email'); 	Adds a unique index.
+$table->index('state'); 	Adds an index.
+$table->spatialIndex('location'); 	Adds a spatial index (except SQLite).
+
+policies:
+    https://www.youtube.com/watch?v=i3jFziRZrkg&t=806s
+
+stripe :
+    nord coders
+    https://youtu.be/O8-TQga7OLs?t=4178
+
+
+markdown email: nord coders
+https://youtu.be/RLGWYpYO7kg?list=PLeeuvNW2FHVj4vHJRj9UDeDsXshHlnHJk&t=1021
+
+pa make:mail ShoptnMail -m mail.template-mail
+
+user:online status
+https://www.youtube.com/watch?v=h-sSuW5-X9s
+
+event:
+https://youtu.be/lXnSbgxokHA?list=PLeeuvNW2FHVj4vHJRj9UDeDsXshHlnHJk&t=781
+
+    pa make:event NewUserRegistredEvent
+    pa make:listener NewUserRegistredListener --event=NewUserRegistredEvent
+
+    event service provider: map event to listener
+
+    in ctrl:
+    event(new NewUserRegistredEvent($user) )
+
+    in event: pass info via __construct
+    in lister:
+        you can access to event attribute ($user) by $event->name === $user->name
+
+observer:
+    https://youtu.be/Sv9rLhIoORM?list=PLeeuvNW2FHVj4vHJRj9UDeDsXshHlnHJk&t=15
+
+       pa make:observer UserObserver --model=User
+    event service provider: save observer in boot method
+
+    we can launch event based on state of model
+    we don't need to event instanciate and (pass user model int the event when calling it)
+    simply we go to the model itself and create a protected array indication the model state and the event
+
+    Protected $dispatchesEvents=[
+        'created' => NewUserRegistredEvent::class
+    ];
+
+
+way to substract day :
+
+$c = 2021-05-03 00:00:00
+$v = 2021-08-23 02:15:30.0
+
+$ts=$c->diffInSeconds($v)
+=> 9684930
+
+$ts/3600  // convert nombre en heure
+=> 2690.2583333333
+
+t horaire = 2000 // 2 tnd
+salaire brut = 2000 * 2690.2583333333
+
+
+on update method skip email validation rule for (id = $request->id) (double cote mandatory to accept "$var "):
+
+'email'=> "required | email | unique:users, email, $request->id"
+
+laravel doc: https://laravel.com/docs/8.x/validation#specifying-custom-messages-in-language-files
+
+    unique:table,column,except,idColumn
+    'email'=> "required | email | unique:users, email, except, $request->id"
+    'email'=> "required | email | unique:users, email, ignore, $request->id"
+     "password" => "uncompromised"
+
+laravel make custom rule :
+
+    php artisan make:rule OlympicYear
+
+        public function passes($attribute, $value)
+    {
+        return $value >= 1896 && $value <= date('Y') && $value % 4 == 0;
+    }
+
+        public function message()
+    {
+        return ':attribute should be a year of Olympic Games';
+    }
+
+    use it, import class OlympicYear in controller
+
+    'year' => required | new OlympicYear
+
+laravel job:
+    will run in background for better ux
+    3 conditions
+
+        change QUEUE_CONNECTION=sync --> QUEUE_CONNECTION=database
+
+        create and migrate a table for registering job
+
+         pa queue:table
+         pa migrate
+
+        pa make:job SendWelcomeMessageJob
+
+        pa queue:work  run the queue daemon
+
+laravel schedule cron / command:
+
+    pa make:command clearOrderCommand --command=order:clear
+
+    under app console
+        add signature //already done by --command=order:clear
+        add handle // command task
+
+    save it in console kernel and schedule it their
+
+   automatically artisan scan command directory and register all inside but if you want to manually register command use arr below
+
+   $protected $commands = [
+    Commands\SendEmails::class
+   ];
+
+    in clearOrderCommand class:
+
+     public function handle()
+    {
+        Order::where('status', 'pending')->delete();
+        $this->info('All pending orders are deleted successfully!');
+    }
+
+    check commande exist
+    pa list
+
+    run schedule daemon but we must put it in only one cron on server which run every minute
+
+    cron server:
+    * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
+    localy:
+    pa schedule:run
+
+    four types of scheduler:
+    schedule class or closure with call method
+    schedule artisan command with methode cammand -> better way give you output status
+    schedule shell  with exec method -> better way give you output status
+    schedule job  with job method -> better way give you output status
+
+
+
+laravel search algolia:
+
+laravel lazyloading:
+
+laravel guzzle:
+
+laravel echat:
+
+laravel pusher:
+
+laravel gmaps:
+
+laravel mangodb:
+
+laravel graphql:
+
+laravel redis:
+
+configure redis
+    add extension redis.dll in php.ini
+    CACHE_DRIVER=redis
+    composer require predis/predis
+    after mutation make forget key cache to erase the cache
+
+
+------------------------------------------------------------------------------------
+tips:
+    User::all(['name', 'email'])->toArray()
+
+    $books = Book::join('')
+	->join('')
+	->selectRaw(' books.*, SUM(orders.qty as book_sold')
+	-> whereBetween('orders.created_at',[
+		now()->subDays(30)->format('Y-m-d').'00:00:00',
+		now()->subDays()->format('Y-m-d').'23:59:59'
+	])
+	->groupBy('books.id)
+	->groupBy('book_sold,'desc )
+	->get();
+
+
+get ssl cert:
+
+
+    Download and extract for cacert.pem here (a clean file format/data)
+
+        https://curl.haxx.se/docs/caextract.html
+
+    Put it in :
+
+        C:\xampp\php\extras\ssl\cacert.pem
+
+    Add this line to your php.ini
+
+        curl.cainfo = "C:\xampp\php\extras\ssl\cacert.pem"
+
+    restart your webserver/Apache
+
+html tips:
+    <picture>
+    <source media="(min-width: 1024px)" srcset="extra-large.jpg">
+    <source media="(min-width: 768px)" srcset="medium.jpg">
+    <source media="(min-width: 360px)" srcset="small.jpg">
+    <img src="default.jpg" alt="">
+    </picture>
+
+ts react:
+
+
+yarn add react react-dom @types/react @types/react-dom
+yarn add ts-loader typescript @babel/preset-react --dev
+tsc --init --jsx react
+mix.ts("resources/js/app.tsx", "public/js").react();
+
+cron:
+    $schedule->command('queue:work --daemon')->everyMinute()->withoutOverlapping();
+cron
+/usr/bin/php /path/to/project/artisan    command
+    php            artisan               queue:work
+
+The trick is to activate this directive on the fly, so that CLI artisan can have access to the parameters:
+* * * * * /usr/bin/php -d register_argc_argv=On /home/my_user/my_app/artisan schedule:run
+
+You could also try the full configuration in case it's allowed:
+* * * * * /usr/bin/php -d register_argc_argv=On /home/my_user/my_app/artisan schedule:run >> /dev/null 2>&1
+
+
+run script:
+    @php
+
+//phpinfo();
+
+// one commande with backtick
+// $output = `ls -al`;
+// $output = `composer --version`;
+// $output = `  pwd `;
+// $output = `  cat /etc/os-release `;
+ $output = `sh ./script.sh`;
+ echo "<pre>$output</pre>";
+
+// script.sh with shell exec , php ini in server must accept exec function
+//$output =shell_exec("./script.sh")
+//echo "<pre>$output</pre>";
+
+
+@endphp
+
+artisan command from root :
+
+
+//Clear configurations:
+			Route::get('/config-clear', function() {
+				$status = Artisan::call('config:clear');
+				return '<h1>Configurations cleared</h1>';
+			});
+
+//Clear cache:
+			Route::get('/cache-clear', function() {
+				$status = Artisan::call('cache:clear');
+				return '<h1>Cache cleared</h1>';
+			});
+
+//Clear configuration cache:
+			Route::get('/config-cache', function() {
+				$status = Artisan::call('config:Cache');
+				return '<h1>Configurations cache cleared</h1>';
+			});
+
+
+  kill queue worker:
+                ps aux | grep php
+
+                then
+
+                kill -9 process-pid
+
+    run queue work shared hosting:
+        flock -xn /tmp/laravel_queues.lockfile -c "/usr/bin/php /path/to/laravel/artisan queue:listen"
+
+check directory exist:
+        {{--  --}}
+        {{-- @if (!File::exists("/home/tndevfac/public_html/storage/img"))
+            <p>not exist</p>
+        @else
+        <p> exist</p>
+        @endif --}}
+
+ check if we are on server:
+{{-- check if we are on server  --}}
+
+        {{-- @if (Str::contains(url()->current(), 'tn-devfactory.com'))
+            <p>{{url()->current() }}</p>
+            <p>we are on tn-devfactory</p>
+        @else
+            <p>url()->current()</p>
+            <p>we are not on tn-devfactory</p>
+        @endif  --}}

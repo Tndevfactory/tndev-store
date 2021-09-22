@@ -1,0 +1,61 @@
+#navigation {
+    font-family: "Oswald", sans-serif;
+
+    .title-brand {
+        font-size: 1.9rem;
+        letter-spacing: 0.61px;
+        font-weight: 500;
+        font-family: "Roboto Slab";
+        color: #0c537a;
+        &:hover {
+            color: lighten(#7e1c5d, 8) !important;
+        }
+        @media (max-width: 700px) {
+            font-size: 0.991rem;
+            letter-spacing: 0.1px;
+            font-weight: 500;
+        }
+    }
+
+    .border-bottom {
+        border-bottom: #7e1c5d 1px solid;
+    }
+
+    #navbarNav a.nav-link {
+        transition: 0.3s;
+        letter-spacing: 1px;
+        border-bottom: transparent 1px solid;
+
+        &:hover {
+            color: lighten(#7e1c5d, 8) !important;
+            border-bottom: #7e1c5d 1px solid;
+        }
+    }
+
+    .sign-in {
+        font-family: "Roboto";
+        font-size: 0.8rem;
+        color: #1b5e82;
+        width: 6rem;
+        height: 1.9rem;
+        border-radius: .7rem;
+        border: 0.66px solid #1b5e82;
+        &:hover {
+            background-color: #1b5e82;
+            color: white;
+        }
+    }
+    .sign-up {
+        font-family: "Roboto";
+        font-size: 0.8rem;
+        color: #7e1c5d;
+        width: 6rem;
+        height: 1.9rem;
+        border-radius: .7rem;
+        border: 0.66px solid #7e1c5d;
+        &:hover {
+            background-color: #7e1c5d;
+            color: white;
+        }
+    }
+}
